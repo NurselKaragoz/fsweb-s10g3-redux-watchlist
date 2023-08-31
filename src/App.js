@@ -3,7 +3,7 @@ import { Switch, Route, NavLink } from "react-router-dom";
 import Movie from "./components/Movie";
 import FavMovie from "./components/FavMovie";
 import { useDispatch, useSelector } from "react-redux";
-import { SONRAKI_FILM, ONCEKI_FILM } from "./store/actions";
+import { SONRAKI_FILM, ONCEKI_FILM, ADD_FAV } from "./store/actions";
 
 function App() {
   // const [sira, setSira] = useState(0);
@@ -17,6 +17,9 @@ function App() {
   }
   function oncekiFilm() {
     dispatch({ type: ONCEKI_FILM });
+  }
+  function addFav() {
+    dispatch({ type: ADD_FAV });
   }
   return (
     <div className="wrapper max-w-2xl mx-auto">
@@ -54,7 +57,10 @@ function App() {
             >
               Önceki Film
             </button>
-            <button className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white">
+            <button
+              onClick={addFav}
+              className="select-none px-4 py-2 bg-blue-700 hover:bg-blue-600 text-white"
+            >
               Listeme ekle
             </button>
           </div>

@@ -1,5 +1,5 @@
 import { movies } from "../movies";
-import { ONCEKI_FILM, SONRAKI_FILM } from "./actions";
+import { ADD_FAV, DELETE_FAV, ONCEKI_FILM, SONRAKI_FILM } from "./actions";
 const initalState = {
   movies: movies,
   sira: 0,
@@ -32,6 +32,25 @@ const reducer = (state = initalState, action) => {
       } else {
         return { ...state, sira: state.movies.length - 1 };
       }
+    case ADD_FAV:
+      const currentMovie = state.movies[state.sira];
+      return {
+        ...state,
+        favoriFilmler: [...state.favoriFilmler, currentMovie],
+        movies: state.movies.filter((m) => m.id !== currentMovie.id),
+        sira: state.sira === 0 ? 0 : state.sira - 1,
+      };
+    case DELETE_FAV:
+      const deletemovie = state.favoriFilmler.filter(
+        (f) => f.id == action.payload
+      );
+      return {
+        ...state,
+        favoriFilmler: state.favoriFilmler.filter(
+          (e) => e.id !== action.payload
+        ),
+        movies: [...state.movies, deletemovie],
+      };
 
     default:
       return state;
